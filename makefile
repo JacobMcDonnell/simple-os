@@ -30,7 +30,7 @@ CFLAGS    = -Wall \
             -mno-sse \
             -mno-sse2 \
             -mno-red-zone \
-            -I src \
+            -I limine \
             -DLIMINE_API_REVISION=3 \
             -MMD \
             -MP \
@@ -45,7 +45,6 @@ NASMFLAGS = -Wall -f elf64
 
 .PHONY: all clean run
 all: $(ISO)
-
 
 $(BIN_DIR) $(OBJ_DIR) $(ISO_ROOT):
 	mkdir $@
@@ -62,7 +61,8 @@ $(OBJ_DIR)/%.S.o: $(SRC_DIR)/%.S | $(OBJ_DIR)
 $(OBJ_DIR)/%.asm.o: $(SRC_DIR)/%.asm | $(OBJ_DIR)
 	nasm $(NASMFLAGS) $< -o $@
 
-$(ISO): $(BIN) | $(ISO_ROOT)
+$(ISO): limine $(BIN) | $(ISO_ROOT)
+	make -C limine
 	mkdir -p $(ISO_ROOT)/boot/limine
 	cp -v $(BIN) $(ISO_ROOT)/boot/
 	cp -v limine.conf limine/limine-bios.sys limine/limine-bios-cd.bin \
@@ -82,4 +82,5 @@ run: $(ISO)
 
 clean:
 	rm -rf $(BIN_DIR) $(OBJ_DIR) $(ISO) $(ISO_ROOT)
+	make -C limine clean
 

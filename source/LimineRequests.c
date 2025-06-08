@@ -1,5 +1,4 @@
 #include <stdint.h>
-#include <limine.h>
 #include "LimineRequests.h"
 
 __attribute__((used, section(".limine_requests_start")))

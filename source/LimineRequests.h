@@ -2,7 +2,7 @@
 #define LIMINEREQUESTS_H_
 
 #include <stdint.h>
-#include <limine.h>
+#include "limine.h"
 
 extern struct limine_stack_size_request stackSizeRequest;
 extern struct limine_framebuffer_request framebufferRequest;
